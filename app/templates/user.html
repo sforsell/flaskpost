@@ -7,7 +7,7 @@
             <td>
                 <h1> User: {{ user.username }} </h1>
                 {% if user.about_me %} <p> {{ user.about_me }} </p> {% endif %}
-                {% if user.last_seen %} <p> {{user.last_seen }} </p> {% endif %}
+                {% if user.last_seen %} <p> Last seen on: {{user.last_seen }} </p> {% endif %}
             </td>
         </tr>
     </table>
@@ -16,6 +16,6 @@
     {% endif %}
     <hr>
     {% for post in posts %}
-        {% include '_post.html' %}}
+        {% include '_post.html' %}
     {% endfor %}
 {% endblock %}
