@@ -39,6 +39,24 @@ class User(UserMixin, db.Model):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
         return 'https://www.gravatar.com/avatar/{}?d=retro&s={}'.format(digest, size)
 
+    def is_following(self, user):
+        return self.followed.filter(followers.c.followed_id == user.id).count() > 0
+
+    def follow(self, user):
+        if not self.is_following(user):
+            self.followed.append.append(user)
+
+    def unfollow(self, user):
+        if self.is_following(user):
+            self.followed.remove(user)
+
+    def followed_posts(self):
+        followed_posts = Post.query.join(followers,
+                                         (followers.c.followed_id == Post.user_id)
+                                         ).filter(followers.c.follower_id == self.id)
+        own_posts = Post.filter_by(user_id=self.id)
+        return followed_posts.union(own_posts).order_by(Post.timestamp.desc())
+
 
 @login.user_loader
 def load_user(id):
