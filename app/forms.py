@@ -3,6 +3,7 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextA
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length
 from app.models import User
 
+
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
@@ -25,7 +26,8 @@ class RegistrationForm(FlaskForm):
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
-            raise ValidationError('Did you already sign up using this email address? Login or use a different email address.')
+            raise ValidationError(
+                'Did you already sign up using this email address? Login or use a different email address.')
 
 
 class EditProfileForm(FlaskForm):
@@ -42,3 +44,8 @@ class EditProfileForm(FlaskForm):
             user = User.query.filter_by(username=self.username.data).first()
             if user is not None:
                 raise ValidationError('Please use a different username, this one is already taken')
+
+
+class PostForm(FlaskForm):
+    post = TextAreaField('What\'s on your mind?', validators=[DataRequired(), Length(min=1, max=140)])
+    submit = SubmitField('Submit')

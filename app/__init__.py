@@ -40,4 +40,3 @@ if not app.debug:
     app.logger.info('FlaskPost startup')
 
 from app import routes, models, errors
-

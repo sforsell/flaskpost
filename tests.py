@@ -21,7 +21,8 @@ class TestUserModelCase(unittest.TestCase):
 
     def test_avatar(self):
         john = User(username='john', email='john@mail.com')
-        self.assertEqual(john.avatar(128), ('https://www.gravatar.com/avatar/97c712aa60976209ae6d1c741b1338d3?d=retro&s=128'))
+        self.assertEqual(john.avatar(128),
+                         'https://www.gravatar.com/avatar/97c712aa60976209ae6d1c741b1338d3?d=retro&s=128')
 
     def test_follow(self):
         john = User(username='john', email='john@mail.com')
@@ -65,13 +66,13 @@ class TestUserModelCase(unittest.TestCase):
         # create four posts
         now = datetime.utcnow()
         john_post = Post(body="post from john", author=john,
-                  timestamp=now + timedelta(seconds=1))  # oldest post
+                         timestamp=now + timedelta(seconds=1))  # oldest post
         susan_post = Post(body="post from susan", author=susan,
-                  timestamp=now + timedelta(seconds=4))  # newest post
+                          timestamp=now + timedelta(seconds=4))  # newest post
         jane_post = Post(body="post from jane", author=jane,
-                  timestamp=now + timedelta(seconds=3))  # second to newest post
+                         timestamp=now + timedelta(seconds=3))  # second to newest post
         steve_post = Post(body="post from steve", author=steve,
-                  timestamp=now + timedelta(seconds=2))  # second to oldest post
+                          timestamp=now + timedelta(seconds=2))  # second to oldest post
         db.session.add_all([john_post, susan_post, jane_post, steve_post])
         db.session.commit()
 
